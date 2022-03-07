@@ -1,16 +1,25 @@
+/**
+ * @author Sandra Reinoso
+ * @author Esther García 
+ */
+
 public class objetivo {
     // Atributos
-    double vangular = 0, vlineal = 0;
+    double vangular = 0;
     double distancia_recorrida = 0;
-    // Math.PI
+    salpicadero salpicadero = new salpicadero();
 
     // Métodos
-    public void convertir(double vel){ // convierte la velocidad angular en lineal
-        vlineal=2*Math.PI*0.15*vel*(60/1000);
+    public double convertir(double vel){ // convierte la velocidad angular en lineal
+        double vlineal;
+        vlineal = 2 * Math.PI * 0.15 * vel * (60/1000); // Km/h
+        return vlineal;
     }
 
-    public void execute(){
+    double ejecutar(double revoluciones, estadoMotor estadoMotor){ // revoluciones calculadas (ya han pasado por los filtros)
         
+        salpicadero.vel_km = convertir(revoluciones);
+        return revoluciones; 
     }
 
 }

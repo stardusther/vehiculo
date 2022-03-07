@@ -1,16 +1,8 @@
+/**
+ * @author Sandra Reinoso
+ * @author Esther García 
+ */
+
 public enum estadoMotor {
-    acelerando, frenando, apagado, encendido
+    ACELERANDO, FRENANDO, APAGADO, ENCENDIDO
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
