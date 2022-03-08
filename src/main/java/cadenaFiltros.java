@@ -15,11 +15,20 @@ public class cadenaFiltros {
     }
 
     public void ejecutar(double revoluciones, estadoMotor estadoMotor){
-        for (filtro f : filters) { // Por cada filtro en filters...
-           filtro.ejecutar(revoluciones, estadoMotor);
-        }
-        salpicadero.ejecutar(revoluciones, estadoMotor);
-     }
+        /*for (filtro f : filters) { // Por cada filtro en filters...
+           filtro.ejecutar(revoluciones, estadoMotor); // los returns se van a la mierda?
+        }*/
+        
+        // Aplicar primer filtro
+        filtro f = filters.get(0);
+        double rev = filtro.ejecutar(revoluciones, estadoMotor);
+        // Aplicar segundo filtro
+        f = filters.get(1);
+        rev = filtro.ejecutar(rev, estadoMotor);
+
+        // Enviárselo al salpicadero
+        salpicadero.ejecutar(rev, estadoMotor); // ejecutar objetivo
+     } 
 
     public void setTarget(objetivo target){
         this.salpicadero = target;

@@ -8,7 +8,6 @@ public interface filtro {
     double velocidadMAX = 5000.0; // RPM
 
     public static double ejecutar(double revoluciones, estadoMotor estadoMotor) {
-        // TODO Auto-generated method stub
         return 0;
     }
 
