@@ -21,14 +21,14 @@ public class cadenaFiltros {
         
         // Aplicar primer filtro
         filtro f = filters.get(0);
-        double rev = filtro.ejecutar(revoluciones, estadoMotor);
+        double rev = f.ejecutar(revoluciones, estadoMotor);
         // Aplicar segundo filtro
         f = filters.get(1);
-        rev = filtro.ejecutar(rev, estadoMotor);
+        rev = f.ejecutar(rev, estadoMotor);
 
         // Enviárselo al salpicadero
         salpicadero.ejecutar(rev, estadoMotor); // ejecutar objetivo
-     } 
+      } 
 
     public void setTarget(objetivo target){
         this.salpicadero = target;

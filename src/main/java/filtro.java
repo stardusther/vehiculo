@@ -7,9 +7,7 @@ public interface filtro {
     double incrementoVelocidad = 100; // RPM
     double velocidadMAX = 5000.0; // RPM
 
-    public static double ejecutar(double revoluciones, estadoMotor estadoMotor) {
-        return 0;
-    }
+    double ejecutar(double revoluciones, estadoMotor estadoMotor);
 
 }
 

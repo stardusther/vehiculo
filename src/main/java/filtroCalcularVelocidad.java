@@ -14,6 +14,8 @@ public class filtroCalcularVelocidad implements filtro{
 
         if(revoluciones > velocidadMAX) //Supera el Maximo
             revoluciones = velocidadMAX;
+        else if (revoluciones < 0)
+            revoluciones = 0;
         
         return revoluciones;
 

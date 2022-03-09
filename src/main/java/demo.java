@@ -17,8 +17,15 @@ public class demo {
         // Programa (creo) no podemos probarlo porque no tenemos el ejecutar de objetivo
         client.sendRequest(0, estadoMotor.APAGADO);
         client.sendRequest(0, estadoMotor.ENCENDIDO);
-        client.sendRequest(20, estadoMotor.ACELERANDO);
-        client.sendRequest(200, estadoMotor.FRENANDO);
+        client.sendRequest(2000, estadoMotor.ACELERANDO);
+        client.sendRequest(2300, estadoMotor.ACELERANDO);
+        client.sendRequest(2400, estadoMotor.ACELERANDO);
+        client.sendRequest(2500, estadoMotor.ACELERANDO);
+        client.sendRequest(2300, estadoMotor.FRENANDO);
+        client.sendRequest(2100, estadoMotor.FRENANDO);
+        client.sendRequest(1500, estadoMotor.FRENANDO);
+        client.sendRequest(1000, estadoMotor.FRENANDO);
+        client.sendRequest(500, estadoMotor.FRENANDO);
         client.sendRequest(0, estadoMotor.APAGADO);
         
      }
