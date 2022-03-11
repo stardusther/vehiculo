@@ -14,9 +14,7 @@ public class objetivo {
 
     // Métodos
     double convertir(double rev){ // convierte la velocidad angular en lineal
-        double v = 2 * Math.PI * 0.15 * rev * 0.06;
-       
-        return v;
+        return 2 * Math.PI * 0.15 * rev * 0.06;
     }
 
     // Por qué devuelve un double ??? lo pone porque la cabecera del método está ya hecha

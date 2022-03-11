@@ -16,7 +16,7 @@ public class cadenaFiltros {
 
     public void ejecutar(double revoluciones, estadoMotor estadoMotor){
         /*for (filtro f : filters) { // Por cada filtro en filters...
-           filtro.ejecutar(revoluciones, estadoMotor); // los returns se van a la mierda?
+           filtro.ejecutar(revoluciones, estadoMotor);
         }*/
         
         // Aplicar primer filtro
