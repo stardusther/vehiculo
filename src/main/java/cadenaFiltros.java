@@ -14,10 +14,11 @@ public class cadenaFiltros {
         filters.add(f);
     }
 
-    public void ejecutar(double revoluciones, estadoMotor estadoMotor){
+    public double ejecutar(double revoluciones, estadoMotor estadoMotor){
         /*for (filtro f : filters) { // Por cada filtro en filters...
            filtro.ejecutar(revoluciones, estadoMotor);
         }*/
+        
         
         // Aplicar primer filtro
         filtro f = filters.get(0);
@@ -27,7 +28,9 @@ public class cadenaFiltros {
         rev = f.ejecutar(rev, estadoMotor);
 
         // Enviárselo al salpicadero
-        salpicadero.ejecutar(rev, estadoMotor); // ejecutar objetivo
+        rev = salpicadero.ejecutar(rev, estadoMotor); // ejecutar objetivo
+        
+        return rev;
       } 
 
     public void setTarget(objetivo target){

@@ -18,7 +18,9 @@ public class gestorFiltros {
    }
 
    // Ejecutar los filtros de la cadena de filtros
-   public void filterRequest(double revoluciones, estadoMotor estadoMotor){
-      filterChain.ejecutar(revoluciones, estadoMotor);
+   public double filterRequest(double revoluciones, estadoMotor estadoMotor){
+       double rev;
+       rev = filterChain.ejecutar(revoluciones, estadoMotor);
+       return rev;
    }
 }

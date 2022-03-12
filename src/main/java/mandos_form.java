@@ -6,16 +6,21 @@
 /**
  *
  * @author Esther
+ * @author Sandra
  */
 import java.awt.Color;
+import java.util.concurrent.TimeUnit;
 
 public class mandos_form extends javax.swing.JFrame {
-
+    cliente client;
+    double revoluciones = 0; //revoluciones iniciales
+    boolean esta_acelerando = false;
     /**
      * Creates new form mandos_form
      */
-    public mandos_form() {
+    public mandos_form(cliente client) {
         initComponents();
+        this.client = client;
     }
 
     /**
@@ -141,7 +146,7 @@ public class mandos_form extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void acelerarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_acelerarButtonActionPerformed
-        // TODO add your handling code here:
+        // pulsamos acelerar
         if(encenderButton.isSelected() && !frenarButton.isSelected() && acelerarButton.isSelected()){
             frenarButton.setEnabled(false);
             encenderButton.setEnabled(false);
@@ -149,6 +154,9 @@ public class mandos_form extends javax.swing.JFrame {
             acelerarButton.setForeground(Color.red);
             label.setText("ACELERANDO");
             label.setForeground(Color.blue);
+            System.out.print("\n-----------------_"+revoluciones);
+            revoluciones = client.sendRequest(revoluciones, estadoMotor.ACELERANDO);
+ 
         } else if(encenderButton.isSelected() && !frenarButton.isSelected() && !acelerarButton.isSelected()){
             pordefecto();
         }
@@ -174,12 +182,14 @@ public class mandos_form extends javax.swing.JFrame {
     private void encenderButtonencenderApagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_encenderButtonencenderApagarActionPerformed
         // TODO add your handling code here:
         
-        if (encenderButton.isSelected()){
+        if (encenderButton.isSelected()){ //pulsamos encender
+            client.sendRequest(0, estadoMotor.ENCENDIDO);
             encenderButton.setText("Apagar");
             encenderButton.setForeground(Color.red);
             pordefecto();
         }
-        else {
+        else { //pulsamos apagar
+            client.sendRequest(0, estadoMotor.APAGADO);
             encenderButton.setText("Encender");
             encenderButton.setForeground(Color.green);
             label.setText("APAGADO");
@@ -190,8 +200,10 @@ public class mandos_form extends javax.swing.JFrame {
     }//GEN-LAST:event_encenderButtonencenderApagarActionPerformed
 
     private void frenarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_frenarButtonActionPerformed
-        // TODO add your handling code here:
+        //Pulsamos frenar
         if(encenderButton.isSelected() && frenarButton.isSelected() && !acelerarButton.isSelected()){
+           
+            revoluciones = client.sendRequest(revoluciones, estadoMotor.FRENANDO);
             acelerarButton.setEnabled(false);
             encenderButton.setEnabled(false);
             frenarButton.setText("Parar de frenar");
@@ -204,40 +216,6 @@ public class mandos_form extends javax.swing.JFrame {
             
     }//GEN-LAST:event_frenarButtonActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(mandos_form.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(mandos_form.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(mandos_form.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(mandos_form.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new mandos_form().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton acelerarButton;

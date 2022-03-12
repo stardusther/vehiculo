@@ -12,7 +12,7 @@ public class cliente {
    }
 
    // Envía la petición al gestor de filtros
-   public void sendRequest(double revoluciones, estadoMotor estadoMotor){
-      filterManager.filterRequest(revoluciones, estadoMotor);
+   public double sendRequest(double revoluciones, estadoMotor estadoMotor){
+      return filterManager.filterRequest(revoluciones, estadoMotor);
    }
 }
