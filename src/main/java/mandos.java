@@ -10,6 +10,7 @@
  */
 import java.awt.Color;
 import java.util.concurrent.TimeUnit;
+import javax.swing.SwingUtilities;
 
 public class mandos extends javax.swing.JFrame {
     cliente client;
@@ -153,13 +154,23 @@ public class mandos extends javax.swing.JFrame {
             acelerarButton.setText("Parar de acelerar");
             acelerarButton.setForeground(Color.red);
             label.setText("ACELERANDO");
-            label.setForeground(Color.blue);
-            System.out.print("\n-----------------_"+revoluciones);
-            revoluciones = client.sendRequest(revoluciones, estadoMotor.ACELERANDO);
- 
+            label.setForeground(Color.blue); 
+            
+            SwingUtilities.invokeLater( // Cómo podemos hacer que no se meta en un bucle infinito? (creando otra hebra??)
+            new Runnable() {
+
+              public void run() {
+                while(acelerarButton.isSelected()){
+                    System.out.print("\n-----------------_"+revoluciones);
+                    revoluciones = client.sendRequest(revoluciones, estadoMotor.ACELERANDO);
+                }
+              }
+            });          
+                        
         } else if(encenderButton.isSelected() && !frenarButton.isSelected() && !acelerarButton.isSelected()){
             pordefecto();
         }
+        
     }//GEN-LAST:event_acelerarButtonActionPerformed
 
     private void reestablecer(boolean b){
