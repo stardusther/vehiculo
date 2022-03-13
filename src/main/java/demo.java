@@ -16,7 +16,7 @@ public class demo {
         cliente client = new cliente();
         client.setFilterManager(filterManager); 
         
-        new mandos_form(client).setVisible(true);
+        new mandos(client).setVisible(true);
         
         client.sendRequest(0, estadoMotor.APAGADO);
 

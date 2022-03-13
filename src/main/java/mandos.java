@@ -11,14 +11,14 @@
 import java.awt.Color;
 import java.util.concurrent.TimeUnit;
 
-public class mandos_form extends javax.swing.JFrame {
+public class mandos extends javax.swing.JFrame {
     cliente client;
     double revoluciones = 0; //revoluciones iniciales
     boolean esta_acelerando = false;
     /**
      * Creates new form mandos_form
      */
-    public mandos_form(cliente client) {
+    public mandos(cliente client) {
         initComponents();
         this.client = client;
     }
