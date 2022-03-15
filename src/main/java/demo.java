@@ -9,17 +9,19 @@ public class demo {
         gestorFiltros filterManager = new gestorFiltros(new objetivo());
         filterManager.setFilter(new filtroRepercutirRozamiento());
         filterManager.setFilter(new filtroCalcularVelocidad());
-        
-        
-        
-  
-        cliente client = new cliente();
-        client.setFilterManager(filterManager); 
-        
-        new mandos(client).setVisible(true);
-        
-        client.sendRequest(0, estadoMotor.APAGADO);
 
-     }
+        
+        objetivo salpicadero = new objetivo();
+
+
+        cliente client = new cliente();
+        client.setFilterManager(filterManager);
+
+        mandos m = new mandos(client);
+        new mandos(client).setVisible(true);
+
+        m.run();
+
+    }
 }
 

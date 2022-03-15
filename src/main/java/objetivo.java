@@ -19,6 +19,10 @@ public class objetivo {
         return v;
     }
 
+    public double getRevoluciones() {
+        return vangular;
+    }
+
     // Por qué devuelve un double ??? lo pone porque la cabecera del método está ya hecha
     double ejecutar(double revoluciones, estadoMotor estadoMotor){ // revoluciones calculadas (ya han pasado por los filtros)
         startTime = (System.currentTimeMillis()-endTime);

@@ -8,10 +8,10 @@
  * @author Esther
  */
 public class Salpicadero extends javax.swing.JFrame {
-    double vangular;
+    double revoluciones;
     String vlineal;
     double distancia_recorrida,distancia_sumada;
-    double revoluciones;
+
     /**
      * Creates new form salpicadero
      */
@@ -210,10 +210,9 @@ public class Salpicadero extends javax.swing.JFrame {
     }//GEN-LAST:event_velocidadActionPerformed
 
 
-    
-    void setVariables( double una_distancia_recorrida,double una_vangular, String una_vlineal, double una_distnacia_sumada){
+    void setVariables(double una_distancia_recorrida, double una_vangular, String una_vlineal, double una_distnacia_sumada){
         //Recogemos los valores
-        vangular = una_vangular;
+        revoluciones = una_vangular;
         vlineal = una_vlineal;
         distancia_recorrida = una_distancia_recorrida;
         distancia_sumada = una_distnacia_sumada;
@@ -222,7 +221,7 @@ public class Salpicadero extends javax.swing.JFrame {
         
         //Lo escribimos en la interfaz
         this.velocidad.setText(String.valueOf(vlineal));
-        this.RPM.setText(String.valueOf(vangular));
+        this.RPM.setText(String.valueOf(revoluciones));
         
         this.cont_reciente.setText(String.valueOf(distancia_sumada));
         this.cont_total.setText(String.valueOf(distancia_recorrida));

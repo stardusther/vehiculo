@@ -1,8 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
-
 /**
  *
  * @author Esther
@@ -12,8 +7,11 @@ import java.awt.Color;
 import java.util.concurrent.TimeUnit;
 import javax.swing.SwingUtilities;
 
-public class mandos extends javax.swing.JFrame {
+public class mandos extends javax.swing.JFrame implements Runnable {
     cliente client;
+    objetivo salpicadero = new objetivo();
+    public Thread hebra;
+    estadoMotor est;
     double revoluciones = 0; //revoluciones iniciales
     boolean esta_acelerando = false;
     /**
@@ -22,7 +20,31 @@ public class mandos extends javax.swing.JFrame {
     public mandos(cliente client) {
         initComponents();
         this.client = client;
+        est = estadoMotor.APAGADO;
+        hebra = new Thread(this, "mandos");
     }
+
+    @Override
+    public void run() {
+        while(true){
+            try{
+                client.sendRequest(salpicadero.getRevoluciones(), getEstado());
+                Thread.sleep(2500);
+            } catch (InterruptedException e){
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public estadoMotor getEstado() {
+        return est;
+    }
+
+
+    public void setEstado(estadoMotor estado) {
+        est = estado;
+    }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -48,7 +70,7 @@ public class mandos extends javax.swing.JFrame {
         acelerarButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         acelerarButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                acelerarButtonActionPerformed(evt);
+                acelerar(evt);
             }
         });
 
@@ -57,7 +79,7 @@ public class mandos extends javax.swing.JFrame {
         encenderButton.setText("ENCENDER");
         encenderButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                encenderButtonencenderApagarActionPerformed(evt);
+                encender(evt);
             }
         });
 
@@ -66,7 +88,7 @@ public class mandos extends javax.swing.JFrame {
         frenarButton.setEnabled(false);
         frenarButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                frenarButtonActionPerformed(evt);
+                frenar(evt);
             }
         });
 
@@ -146,7 +168,7 @@ public class mandos extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void acelerarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_acelerarButtonActionPerformed
+    private void acelerar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_acelerar
         // pulsamos acelerar
         if(encenderButton.isSelected() && !frenarButton.isSelected() && acelerarButton.isSelected()){
             frenarButton.setEnabled(false);
@@ -154,9 +176,11 @@ public class mandos extends javax.swing.JFrame {
             acelerarButton.setText("Parar de acelerar");
             acelerarButton.setForeground(Color.red);
             label.setText("ACELERANDO");
-            label.setForeground(Color.blue); 
+            label.setForeground(Color.blue);
+
+            setEstado(estadoMotor.ACELERANDO);
             
-            SwingUtilities.invokeLater( // Cómo podemos hacer que no se meta en un bucle infinito? (creando otra hebra??)
+            /*SwingUtilities.invokeLater( // Cómo podemos hacer que no se meta en un bucle infinito? (creando otra hebra??)
             new Runnable() {
 
               public void run() {
@@ -165,13 +189,13 @@ public class mandos extends javax.swing.JFrame {
                     revoluciones = client.sendRequest(revoluciones, estadoMotor.ACELERANDO);
                 }
               }
-            });          
+            });       */
                         
         } else if(encenderButton.isSelected() && !frenarButton.isSelected() && !acelerarButton.isSelected()){
             pordefecto();
         }
         
-    }//GEN-LAST:event_acelerarButtonActionPerformed
+    }//GEN-LAST:event_acelerar
 
     private void reestablecer(boolean b){
         acelerarButton.setText("Acelerar");
@@ -179,7 +203,7 @@ public class mandos extends javax.swing.JFrame {
         acelerarButton.setEnabled(b);
         frenarButton.setText("Frenar");
         frenarButton.setForeground(Color.black);
-        frenarButton.setEnabled(b);    
+        frenarButton.setEnabled(b);
     }
     
     private void pordefecto(){
@@ -188,9 +212,10 @@ public class mandos extends javax.swing.JFrame {
         label.setForeground(Color.green);       
         encenderButton.setForeground(Color.red);
         encenderButton.setEnabled(true);
+        setEstado(estadoMotor.ENCENDIDO);
     }
     
-    private void encenderButtonencenderApagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_encenderButtonencenderApagarActionPerformed
+    private void encender(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_encender
         // TODO add your handling code here:
         
         if (encenderButton.isSelected()){ //pulsamos encender
@@ -206,14 +231,14 @@ public class mandos extends javax.swing.JFrame {
             label.setText("APAGADO");
             label.setForeground(Color.red);
             reestablecer(false);
+            setEstado(estadoMotor.APAGADO);
         }
                 
-    }//GEN-LAST:event_encenderButtonencenderApagarActionPerformed
+    }//GEN-LAST:event_encender
 
-    private void frenarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_frenarButtonActionPerformed
+    private void frenar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_frenar
         //Pulsamos frenar
         if(encenderButton.isSelected() && frenarButton.isSelected() && !acelerarButton.isSelected()){
-           
             revoluciones = client.sendRequest(revoluciones, estadoMotor.FRENANDO);
             acelerarButton.setEnabled(false);
             encenderButton.setEnabled(false);
@@ -221,11 +246,13 @@ public class mandos extends javax.swing.JFrame {
             frenarButton.setForeground(Color.red);
             label.setText("FRENANDO");
             label.setForeground(Color.blue);
+
+            setEstado(estadoMotor.FRENANDO);
         } else{
             pordefecto();
         }
             
-    }//GEN-LAST:event_frenarButtonActionPerformed
+    }//GEN-LAST:event_frenar
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -236,4 +263,5 @@ public class mandos extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel label;
     // End of variables declaration//GEN-END:variables
+
 }
